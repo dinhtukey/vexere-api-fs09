@@ -9,5 +9,10 @@ router.post(
     authorize(["client"]),
     ticketController.createTicket
 );
-
+router.delete(
+    "/tickets/:id",
+    authenticate,
+    authorize(["client"]),
+    ticketController.cancelTicket
+)
 module.exports = router

@@ -7,8 +7,8 @@ const _ = require("lodash");
 //built-in package
 const { promisify } = require("util")
 const registerUser = (req, res, next) => {
-    const { email, password, fullname } = req.body;
-    let newUser = new User({ email, password, fullname });
+    const { email, password, fullname,userType } = req.body;
+    let newUser = new User({ email, password, fullname,userType });
     newUser.save()
         .then(user => res.status(200).json(user))
         .catch(err => {

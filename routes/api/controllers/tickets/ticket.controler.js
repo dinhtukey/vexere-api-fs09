@@ -62,6 +62,34 @@ const createTicket = (req,res,next) => {
     })
 }
 
+
+const cancelTicket = (req,res,next) => {
+    const {id} = req.params;
+    let _ticket;
+    Ticket.findById(id)
+    .populate("tripId")
+    .then(ticket=>{
+        _ticket = ticket;
+        if(!ticket) return Promise.reject({
+            status:404,
+            message:"Ticket not found"
+        })
+        
+        const seatCodes = ticket.seats;
+        seatCodes.forEach(code=>{
+            const seatIndex = ticket.tripId.seats.findIndex(seat=>seat.code===code)
+            ticket.tripId.seats[seatIndex].isBooked = false
+        })
+        return Promise.all([
+            Ticket.deleteOne({_id:id}),
+            ticket.tripId.save()
+        ])
+    })
+    .then((res)=>{
+        res.status(200).json(_ticket)
+    })
+    .catch()
+}
 module.exports = {
-    createTicket
+    createTicket,cancelTicket
 }

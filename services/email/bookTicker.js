@@ -29,7 +29,7 @@ module.exports.sendBookTicketEmail = (ticket,trip,user) => {
             toStation: trip.toStation.name,
             price: trip.price,
             amount: ticket.seats.length,
-            total: ticket.totalPrice * ticket.seats.length,
+            total: ticket.totalPrice,
             seatCodes: ticket.seats
             .map(m=>m.code)
             .join(", ")

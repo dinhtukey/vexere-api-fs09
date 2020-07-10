@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const config = require("./config")
 //console.log(process.env.NODE_ENV)
-console.log(config)
+// /console.log(config)
 // console.log("LOCAL_PORT: " ,process.env.LOCAL_PORT)
 // console.log("STAGING_PORT: " ,process.env.STAGING_PORT)
 // let port;
@@ -17,8 +17,8 @@ console.log(config)
 // const trips = require("./routes/api/trips");
 // const users = require("./routes/api/users");
 
-
-mongoose.connect("mongodb://localhost:27017/fs09-vexere", {
+const mongoUri = process.env.MONGO_URI || config.mongoUri
+mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
